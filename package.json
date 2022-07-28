@@ -1,11 +1,11 @@
 {
-    "name": "sakai-react",
+    "name": "pirveli-admin-panel",
     "version": "7.0.3-SNAPSHOT",
     "homepage": ".",
     "private": false,
     "repository": {
         "type": "git",
-        "url": "https://github.com/primefaces/sakai-react.git"
+        "url": "https://github.com/Optimogroupio/pirveli-admin-panel.git"
     },
     "license": "MIT",
     "dependencies": {
