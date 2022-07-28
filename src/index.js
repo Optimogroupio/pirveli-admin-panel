@@ -3,12 +3,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 //import * as serviceWorker from './serviceWorker';
-import { HashRouter } from 'react-router-dom'
+import {HashRouter, Route} from 'react-router-dom'
 import ScrollToTop from './ScrollToTop';
+import LoginForm from "./components/LoginForm";
 
 ReactDOM.render(
     <HashRouter>
         <ScrollToTop>
+            {/*<Route path="/login" component={LoginForm}/>*/}
+            {/*<Route path="/home" component={App}/>*/}
             <App></App>
         </ScrollToTop>
     </HashRouter>,
