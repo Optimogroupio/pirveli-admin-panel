@@ -30,7 +30,6 @@ const App = () => {
     const [staticMenuInactive, setStaticMenuInactive] = useState(false);
     const [overlayMenuActive, setOverlayMenuActive] = useState(false);
     const [mobileMenuActive, setMobileMenuActive] = useState(false);
-    const [mobileTopbarMenuActive, setMobileTopbarMenuActive] = useState(false);
     const copyTooltipRef = useRef();
     const location = useLocation();
 
@@ -135,7 +134,7 @@ const App = () => {
             items: [
                 {label: 'Services', icon: 'pi pi-fw pi-id-card', to: '/services'},
                 {label: 'Contracts', icon: 'pi pi-fw pi-check-square', to: '/contracts'},
-                {label: "Parties", icon: "pi pi-fw pi-bookmark", to: "/floatlabel"},
+                {label: "Parties", icon: "pi pi-fw pi-bookmark", to: "/parties"},
             ]
         },
     ];
