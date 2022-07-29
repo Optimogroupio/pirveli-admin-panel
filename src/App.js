@@ -17,9 +17,7 @@ import './assets/demo/Demos.scss';
 import './assets/layout/layout.scss';
 import './App.scss';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import Home from "./Home";
 import SendToDropbox from "./auth/Oauth";
-import ReceiveFromDropbox from "./auth/OauthCallBack";
 import {AppMenu} from "./AppMenu";
 import classNames from "classnames";
 
@@ -178,7 +176,6 @@ const App = () => {
                 <div className="layout-main-container">
                     <div className="layout-main">
                         <Routes>
-                            <Route element={<Home/>} path="/home" exact={true}/>
                             <Route element={<Service/>} path='/services' exact={true}/>
                             <Route element={<LoginForm/>} path="/login" exact={true}/>
                         </Routes>
