@@ -8,13 +8,11 @@ import ScrollToTop from './ScrollToTop';
 import LoginForm from "./components/LoginForm";
 
 ReactDOM.render(
-    <HashRouter>
-        <ScrollToTop>
-            {/*<Route path="/login" component={LoginForm}/>*/}
-            {/*<Route path="/home" component={App}/>*/}
-            <App></App>
-        </ScrollToTop>
-    </HashRouter>,
+    <React.StrictMode>
+        {/*<ScrollToTop>*/}
+        <App/>
+        {/*</ScrollToTop>*/}
+    </React.StrictMode>,
     document.getElementById('root')
 );
 

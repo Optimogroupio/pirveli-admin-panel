@@ -6,7 +6,6 @@ import {Password} from 'primereact/password';
 import {Dialog} from 'primereact/dialog';
 import {classNames} from 'primereact/utils';
 import '../style/LoginForm.css';
-import Home from "../Home";
 
 const LoginForm = () => {
     const [showMessage, setShowMessage] = useState(false);
@@ -18,15 +17,15 @@ const LoginForm = () => {
         password: ''
     }
 
-    useEffect(() => {
-        // countryservice.getCountries().then(data => setCountries(data));
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    // useEffect(() => {
+    //     // countryservice.getCountries().then(data => setCountries(data));
+    // }, [success]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const {control, formState: {errors}, handleSubmit, reset} = useForm({defaultValues});
 
     const onSubmit = (data) => {
         setFormData(data);
-        setShowMessage(true);
+        // setShowMessage(true);
         setSuccess(true);
         reset();
     };
@@ -40,10 +39,6 @@ const LoginForm = () => {
 
 
     return (
-        <>
-            {success ? (
-                <Home/>
-            ) : (
                 <div className="form-demo">
                     <Dialog visible={showMessage} onHide={() => setShowMessage(false)} position="top" footer={dialogFooter} showHeader={false} breakpoints={{'960px': '80vw'}} style={{width: '30vw'}}>
                         <div className="flex justify-content-center flex-column pt-6 px-3">
@@ -85,8 +80,6 @@ const LoginForm = () => {
                         </div>
                     </div>
                 </div>
-            )}
-        </>
     );
 }
 export default LoginForm;

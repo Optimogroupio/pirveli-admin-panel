@@ -8,8 +8,9 @@ const Service = () => {
     )
 }
 
-const comparisonFn = function (prevProps, nextProps) {
-    return prevProps.location.pathname === nextProps.location.pathname;
-};
-
-export default React.memo(Service, comparisonFn);
+// const comparisonFn = function (prevProps, nextProps) {
+//     return prevProps.location.pathname === nextProps.location.pathname;
+// };
+//
+// export default React.memo(Service, comparisonFn);
+export default Service;

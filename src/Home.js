@@ -1,18 +1,7 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState} from 'react';
 import classNames from 'classnames';
-import {Route, useLocation} from 'react-router-dom';
-import {CSSTransition} from 'react-transition-group';
-
-import {AppFooter} from './AppFooter';
 import {AppMenu} from './AppMenu';
-import {AppConfig} from './AppConfig';
-
-
-import Service from "./components/Service";
-import Contract from "./components/Contract";
-
 import PrimeReact from 'primereact/api';
-
 import 'primereact/resources/primereact.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
@@ -30,25 +19,23 @@ const Home = () => {
     const [staticMenuInactive, setStaticMenuInactive] = useState(false);
     const [overlayMenuActive, setOverlayMenuActive] = useState(false);
     const [mobileMenuActive, setMobileMenuActive] = useState(false);
-    const copyTooltipRef = useRef();
-    const location = useLocation();
 
     PrimeReact.ripple = true;
 
     let menuClick = false;
     let mobileTopbarMenuClick = false;
 
-    useEffect(() => {
-        if (mobileMenuActive) {
-            addClass(document.body, "body-overflow-hidden");
-        } else {
-            removeClass(document.body, "body-overflow-hidden");
-        }
-    }, [mobileMenuActive]);
+    // useEffect(() => {
+    //     if (mobileMenuActive) {
+    //         addClass(document.body, "body-overflow-hidden");
+    //     } else {
+    //         removeClass(document.body, "body-overflow-hidden");
+    //     }
+    // }, [mobileMenuActive]);
 
-    useEffect(() => {
-        copyTooltipRef && copyTooltipRef.current && copyTooltipRef.current.updateTargetEvents();
-    }, [location]);
+    // useEffect(() => {
+    //     copyTooltipRef && copyTooltipRef.current && copyTooltipRef.current.updateTargetEvents();
+    // }, [location]);
 
     const onInputStyleChange = (inputStyle) => {
         setInputStyle(inputStyle);
@@ -166,23 +153,17 @@ const Home = () => {
 
     return (
         <div className={wrapperClass} onClick={onWrapperClick}>
-            {/*<Tooltip ref={copyTooltipRef} target=".block-action-copy" position="bottom" content="Copied to clipboard" event="focus" />*/}
-
-            {/*<AppTopbar onToggleMenuClick={onToggleMenuClick} layoutColorMode={layoutColorMode}*/}
-            {/*    mobileTopbarMenuActive={mobileTopbarMenuActive} onMobileTopbarMenuClick={onMobileTopbarMenuClick} onMobileSubTopbarMenuClick={onMobileSubTopbarMenuClick} />*/}
-
             <div className="layout-sidebar" onClick={onSidebarClick}>
                 <AppMenu model={menu} onMenuItemClick={onMenuItemClick} layoutColorMode={layoutColorMode}/>
             </div>
-
-            <div className="layout-main-container">
-                <div className="layout-main">
-                    <Route exact path="/services" component={Service}/>
-                    <Route exact path="/contracts" component={Contract}/>
-                </div>
-
-                <AppFooter layoutColorMode={layoutColorMode}/>
-            </div>
+            {/*<div className="layout-main-container">*/}
+            {/*    <div className="layout-main">*/}
+            {/*        /!*<Route exact={true} path="/services" component={Service}/>*!/*/}
+            {/*        /!*<Route exact path="/contracts" component={Contract}/>*!/*/}
+            {/*    </div>*/}
+            {/*    <AppFooter layoutColorMode={layoutColorMode}/>*/}
+            {/*</div>*/}
+            {/*<Main/>*/}
         </div>
     );
 
