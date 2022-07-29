@@ -2,12 +2,14 @@ import 'react-app-polyfill/ie11';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import OAuthRouter from "./Oauth/router"
 
 
 ReactDOM.render(
     <React.StrictMode>
         {/*<ScrollToTop>*/}
-        <App/>
+        <OAuthRouter/>
+        {/*<App/>*/}
         {/*</ScrollToTop>*/}
     </React.StrictMode>,
     document.getElementById('root')
