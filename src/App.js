@@ -3,10 +3,9 @@ import {CSSTransition} from 'react-transition-group';
 
 import {AppConfig} from './AppConfig';
 import Service from "./components/Service";
-
-import LoginForm from "./components/LoginForm";
-
 import PrimeReact from 'primereact/api';
+import Contract from "./components/Contract";
+import Payment from "./components/Payment";
 
 import 'primereact/resources/primereact.css';
 import 'primeicons/primeicons.css';
@@ -17,9 +16,12 @@ import './assets/demo/Demos.scss';
 import './assets/layout/layout.scss';
 import './App.scss';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import SendToDropbox from "./auth/Oauth";
 import {AppMenu} from "./AppMenu";
 import classNames from "classnames";
+import OAuthLoginBtn from "./Oauth/login";
+import OAuthResponse from "./Oauth/response";
+import PrivateRoute from "./PrivateRoute";
+import {AppTopbar} from "./AppTopbar";
 
 const App = () => {
     const [layoutMode, setLayoutMode] = useState('static');
@@ -29,6 +31,8 @@ const App = () => {
     const [staticMenuInactive, setStaticMenuInactive] = useState(false);
     const [overlayMenuActive, setOverlayMenuActive] = useState(false);
     const [mobileMenuActive, setMobileMenuActive] = useState(false);
+    const [tokenIsValid, setTokenIsValid] = useState(localStorage.getItem('accessToken'));
+    const [mobileTopbarMenuActive, setMobileTopbarMenuActive] = useState(false);
 
 
     PrimeReact.ripple = true;
@@ -42,11 +46,7 @@ const App = () => {
         } else {
             removeClass(document.body, "body-overflow-hidden");
         }
-    }, [mobileMenuActive]);
-
-    // useEffect(() => {
-    //     copyTooltipRef && copyTooltipRef.current && copyTooltipRef.current.updateTargetEvents();
-    // }, []);
+    }, [mobileMenuActive, tokenIsValid]);
 
     const onInputStyleChange = (inputStyle) => {
         setInputStyle(inputStyle);
@@ -98,6 +98,7 @@ const App = () => {
         }
 
         event.preventDefault();
+        console.log(tokenIsValid)
     }
 
     const onSidebarClick = () => {
@@ -107,7 +108,7 @@ const App = () => {
     const onMobileTopbarMenuClick = (event) => {
         mobileTopbarMenuClick = true;
 
-        // setMobileTopbarMenuActive((prevState) => !prevState);
+        setMobileTopbarMenuActive((prevState) => !prevState);
         event.preventDefault();
     }
 
@@ -133,6 +134,7 @@ const App = () => {
                 {label: 'Services', icon: 'pi pi-fw pi-id-card', to: '/services'},
                 {label: 'Contracts', icon: 'pi pi-fw pi-check-square', to: '/contracts'},
                 {label: "Parties", icon: "pi pi-fw pi-bookmark", to: "/parties"},
+                {label: 'Payments', icon: 'pi pi-fw pi-dollar', to: '/payments'}
             ]
         },
     ];
@@ -162,33 +164,62 @@ const App = () => {
         'layout-theme-light': layoutColorMode === 'dark'
     });
 
-    return (
+    function changeToken() {
+        return setTokenIsValid(true);
+    }
 
-        <div className={wrapperClass} onClick={onWrapperClick}>
-            <Router>
-                <Routes>
-                    <Route element={<SendToDropbox/>} path='/' exact={true}/>
-                </Routes>
-                <div className="layout-sidebar" onClick={onSidebarClick}>
-                    <AppMenu model={menu} onMenuItemClick={onMenuItemClick} layoutColorMode={layoutColorMode}/>
-                </div>
-                <h1>Hello</h1>
-                <div className="layout-main-container">
-                    <div className="layout-main">
-                        <Routes>
-                            <Route element={<Service/>} path='/services' exact={true}/>
-                            <Route element={<LoginForm/>} path="/login" exact={true}/>
-                        </Routes>
-                    </div>
-                    {/*<AppFooter layoutColorMode={layoutColorMode}/>*/}
-                </div>
-            </Router>
-            <AppConfig rippleEffect={ripple} onRippleEffect={onRipple} inputStyle={inputStyle} onInputStyleChange={onInputStyleChange}
-                       layoutMode={layoutMode} onLayoutModeChange={onLayoutModeChange} layoutColorMode={layoutColorMode} onColorModeChange={onColorModeChange}/>
-            <CSSTransition classNames="layout-mask" timeout={{enter: 200, exit: 200}} in={mobileMenuActive} unmountOnExit>
-                <div className="layout-mask p-component-overlay"></div>
-            </CSSTransition>
-        </div>
+    function logout() {
+        openInNewTab();
+        localStorage.removeItem('accessToken');
+    }
+
+    const openInNewTab = () => {
+        window.open('http://auth.pirveli.ge/realms/xracoon-demo/protocol/openid-connect/logout',
+            '_self', 'noopener,noreferrer');
+    };
+
+    return (
+        <>
+            <div className={wrapperClass} onClick={onWrapperClick}>
+                <Router>
+                    <Routes>
+                        <Route element={<OAuthLoginBtn/>} path='/' exact/>
+                        <Route>
+                            <Route element={<OAuthResponse parentCallBack={changeToken}/>} path='/home' exact/>
+                        </Route>
+                    </Routes>
+                    {tokenIsValid
+                        ? <div>
+                            <AppTopbar onToggleMenuClick={onToggleMenuClick} layoutColorMode={layoutColorMode}
+                                       mobileTopbarMenuActive={mobileTopbarMenuActive}
+                                       onMobileTopbarMenuClick={onMobileTopbarMenuClick}
+                                       onMobileSubTopbarMenuClick={onMobileSubTopbarMenuClick} logout={logout}/>
+                            <div className="layout-sidebar" onClick={onSidebarClick}>
+                                <AppMenu model={menu} onMenuItemClick={onMenuItemClick} layoutColorMode={layoutColorMode}/>
+                            </div>
+                            <div className="layout-main-container">
+                                <div className="layout-main">
+                                    <Routes>
+                                        <Route element={<PrivateRoute/>}>
+                                            <Route element={<Service/>} path="/services" exact/>
+                                            <Route element={<Contract/>} path="/contracts" exact/>
+                                            <Route element={<Payment/>} path="/payments" exact/>
+                                        </Route>
+                                    </Routes>
+                                </div>
+                                {/*<AppFooter layoutColorMode={layoutColorMode}/>*/}
+                            </div>
+                        </div>
+                        : null
+                    }
+                </Router>
+                <AppConfig rippleEffect={ripple} onRippleEffect={onRipple} inputStyle={inputStyle} onInputStyleChange={onInputStyleChange}
+                           layoutMode={layoutMode} onLayoutModeChange={onLayoutModeChange} layoutColorMode={layoutColorMode} onColorModeChange={onColorModeChange}/>
+                <CSSTransition classNames="layout-mask" timeout={{enter: 200, exit: 200}} in={mobileMenuActive} unmountOnExit>
+                    <div className="layout-mask p-component-overlay"></div>
+                </CSSTransition>
+            </div>
+        </>
     );
 
 }

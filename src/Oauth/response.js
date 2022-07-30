@@ -2,17 +2,20 @@ import React from 'react'
 import {AuthorizationCodeCallback} from "react-oauth2-auth-code-flow"
 import {oauthClient} from "./client"
 
-const OAuthResponse=()=>{
-   const handleSuccess = async (accessToken, { response, state }) => {
+const OAuthResponse = ({parentCallBack}) => {
+    const handleSuccess = async (accessToken, {response, state}) => {
         console.log("Successfully authorized");
+        localStorage.setItem('accessToken', accessToken);
+        if (accessToken != null)
+            parentCallBack();
         console.log({
-            accessToken:accessToken,
-            response:response,
-            state:state
+            accessToken: accessToken,
+            response: response,
+            state: state
         })
     };
 
-   const handleError = (error) => {
+    const handleError = (error) => {
         console.error("An error occurred");
         console.error(error.message);
     };
@@ -21,7 +24,7 @@ const OAuthResponse=()=>{
             oauthClient={oauthClient}
             onAuthSuccess={handleSuccess}
             onAuthError={handleError}
-            render={({ processing, state, error }) => (
+            render={({processing, state, error}) => (
                 <div>
                     {processing && <p>Authorizing now...</p>}
                     {error && (

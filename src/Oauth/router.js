@@ -3,16 +3,16 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom"
 
 import OAuthResponse from "./response"
 import OAuthLoginBtn from "./login"
-const OAuthRouter = () =>{
-    return  <Router>
 
-                <Routes>
-                    <Route element={<OAuthLoginBtn/>} path='/' exact={true}/>
-                </Routes>
-                <Routes>
-                    <Route element={<OAuthResponse/>} path='/home' exact={true}/>
-                </Routes>
-        </Router>
+const OAuthRouter = () => {
+    // return <Router>
+    //     <Routes>
+    //         <Route exact element={<OAuthLoginBtn/>} path='/'/>
+    //     </Routes>
+    //     <Routes>
+    //         <Route exact element={<OAuthResponse/>} path='/home'/>
+    //     </Routes>
+    // </Router>
 }
 
 
