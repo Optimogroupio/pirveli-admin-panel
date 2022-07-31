@@ -7,8 +7,4 @@ const Contract = () => {
     )
 }
 
-const comparisonFn = function (prevProps, nextProps) {
-    return prevProps.location.pathname === nextProps.location.pathname;
-};
-
-export default React.memo(Contract, comparisonFn);
+export default React.memo(Contract);

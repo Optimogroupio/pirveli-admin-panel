@@ -22,6 +22,8 @@ import OAuthLoginBtn from "./Oauth/login";
 import OAuthResponse from "./Oauth/response";
 import PrivateRoute from "./PrivateRoute";
 import {AppTopbar} from "./AppTopbar";
+import {menu} from "./utils/menu";
+import logout from "./Oauth/logout";
 
 const App = () => {
     const [layoutMode, setLayoutMode] = useState('static');
@@ -128,17 +130,6 @@ const App = () => {
         return window.innerWidth >= 992;
     }
 
-    const menu = [
-        {
-            items: [
-                {label: 'Services', icon: 'pi pi-fw pi-id-card', to: '/services'},
-                {label: 'Contracts', icon: 'pi pi-fw pi-check-square', to: '/contracts'},
-                {label: "Parties", icon: "pi pi-fw pi-bookmark", to: "/parties"},
-                {label: 'Payments', icon: 'pi pi-fw pi-dollar', to: '/payments'}
-            ]
-        },
-    ];
-
     const addClass = (element, className) => {
         if (element.classList)
             element.classList.add(className);
@@ -168,15 +159,6 @@ const App = () => {
         return setTokenIsValid(true);
     }
 
-    function logout() {
-        openInNewTab();
-        localStorage.removeItem('accessToken');
-    }
-
-    const openInNewTab = () => {
-        window.open('http://auth.pirveli.ge/realms/xracoon-demo/protocol/openid-connect/logout',
-            '_self', 'noopener,noreferrer');
-    };
 
     return (
         <>
@@ -201,16 +183,15 @@ const App = () => {
                                 <div className="layout-main">
                                     <Routes>
                                         <Route element={<PrivateRoute/>}>
-                                            <Route element={<Service/>} path="/services" exact/>
                                             <Route element={<Contract/>} path="/contracts" exact/>
                                             <Route element={<Payment/>} path="/payments" exact/>
+                                            <Route element={<Service/>} path="/services" exact/>
                                         </Route>
                                     </Routes>
                                 </div>
-                                {/*<AppFooter layoutColorMode={layoutColorMode}/>*/}
                             </div>
                         </div>
-                        : null
+                        : <h1>Not Authorized</h1>
                     }
                 </Router>
                 <AppConfig rippleEffect={ripple} onRippleEffect={onRipple} inputStyle={inputStyle} onInputStyleChange={onInputStyleChange}

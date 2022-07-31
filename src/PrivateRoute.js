@@ -3,7 +3,6 @@ import {Outlet, Navigate} from 'react-router-dom'
 
 const PrivateRoutes = () => {
     let auth = {'token': localStorage.getItem('accessToken')}
-    debugger
     return (
         auth.token ? <Outlet/> : <Navigate to="/"/>
     )

@@ -3,6 +3,7 @@ import {TreeTable} from 'primereact/treetable';
 import {Column} from 'primereact/column';
 import {Button} from 'primereact/button';
 import {ServiceService} from '../service/ServiceService';
+import '../style/TreeTable.css'
 
 const ServiceTreeTable = () => {
     const [nodes, setNodes] = useState([]);
@@ -26,8 +27,8 @@ const ServiceTreeTable = () => {
         <div>
             <div className="card">
                 <TreeTable value={nodes} header={header} footer={footer}>
-                    <Column field="name" header="Name" expander></Column>
-                    <Column field="" header="Price"></Column>
+                    <Column className="p-col-m" field="name" header="Name" expander></Column>
+                    <Column className="p-col-m" field="" header="Price"></Column>
                     <Column field="" header="Type"></Column>
                     <Column></Column>
                     <Column body={actionTemplate} style={{textAlign: 'center', width: '10rem'}}/>
@@ -36,9 +37,4 @@ const ServiceTreeTable = () => {
         </div>
     );
 }
-
-const comparisonFn = function (prevProps, nextProps) {
-    return prevProps.location.pathname === nextProps.location.pathname;
-};
-
-export default React.memo(ServiceTreeTable, comparisonFn);
+export default React.memo(ServiceTreeTable);
