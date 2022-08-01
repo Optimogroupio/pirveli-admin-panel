@@ -27,8 +27,8 @@ const ServiceTreeTable = () => {
         <div>
             <div className="card">
                 <TreeTable value={nodes} header={header} footer={footer}>
-                    <Column className="p-col-m" field="name" header="Name" expander></Column>
-                    <Column className="p-col-m" field="" header="Price"></Column>
+                    <Column field="name" header="Name" expander></Column>
+                    <Column field="" header="Price"></Column>
                     <Column field="" header="Type"></Column>
                     <Column></Column>
                     <Column body={actionTemplate} style={{textAlign: 'center', width: '10rem'}}/>

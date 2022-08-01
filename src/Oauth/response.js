@@ -5,7 +5,7 @@ import {oauthClient} from "./client"
 const OAuthResponse = ({parentCallBack}) => {
     const handleSuccess = async (accessToken, {response, state}) => {
         console.log("Successfully authorized");
-        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('accessToken', response.accessToken);
         if (accessToken != null)
             parentCallBack();
         console.log({
